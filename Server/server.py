@@ -3,7 +3,7 @@ import time, os, subprocess, re, shutil
 
 def primeraIPDisponible():
 
-	for x in os.walk("/root/matriculasValidas"):
+	for x in os.listdir('/root/matriculasValidas'):
 		# Registramos la direccion del archivo para poder abrirlo
 		aux2 = "/root/matriculasValidas/" + str(x)
 		with open (aux2) as origin_file:
@@ -13,7 +13,6 @@ def primeraIPDisponible():
 				      	matricula = line.rstrip("\n")
 				# Buscamos si hay "IP" en la linea
 				if 'IP' in line:
-					matricula = origin_file[3:4]
 					IP = line.split()[2]
 					# Aqui iria la consulta de la base de datos ya sea la del cloud o una local que creemos para los estados.
 					# Si es true que su estado es disponible, devolvemos esta ip, sino, seguimos mirando los demas archivos.
@@ -26,7 +25,7 @@ def primeraIPDisponible():
 # Ponemos while 1 pq se ejecuta todo el rato, pararemos cuando arranque el coche, ja que para toda la computacion
 while 1:	
 	# Si hay algun archivo
-	for x in os.walk("/root/toExecute"):
+	for x in os.listdir('/root/toExecute'):
 		IP = primeraIPDisponible()				
 
 		while IP == "noIP":
@@ -34,10 +33,11 @@ while 1:
 			IP = primeraIPDisponible()
 
 		dir_programa = "/root/toExecute/" + str(x)
+		print (dir_programa)
 		#Hacemos el SCP		
-		p = subprocess.Popen (["scp", "dir_programa", "root@"+IP+":/root/comp"])
+		p = subprocess.Popen (["scp", dir_programa, "root@"+IP+":/root/comp"])
 		# Esperamos a que termine el envio.
-		sts = os.waitpid(p.pid, 0).
+		sts = os.waitpid(p.pid, 0)
 
 		#Ahora que el programa ya se ha mandado al agente en cuestion, lo eliminamos del server.
 		os.remove(dir_programa)
