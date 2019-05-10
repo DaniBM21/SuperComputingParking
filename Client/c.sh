@@ -7,7 +7,7 @@ matricula=$(cat /root/log/accLog.txt | sed -n '3p')
 /usr/local/bin/systemInfo.sh
 
 #Enviem un txt amb els recursos al servidor
-scp $matricula.txt root@10.10.6.1:/root/matriculas
+scp $matricula.txt root@10.10.6.1:/root/matriculasComprovar
 
 #Creem el directori pels arxius de computació en cas de que no existeixi
 mkdir -p /root/comp
