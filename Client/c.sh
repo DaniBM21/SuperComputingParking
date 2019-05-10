@@ -4,7 +4,7 @@
 matricula=$(cat /root/log/accLog.txt | sed -n '3p')
 
 #Executem l'script dels recursos
-/usr/local/bin/systemInfo.sh
+/root/systemInfo.sh
 
 #Enviem un txt amb els recursos al servidor
 scp /root/log/$matricula.txt root@10.10.6.1:/root/matriculasValidas
