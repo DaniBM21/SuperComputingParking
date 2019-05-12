@@ -1,0 +1,12 @@
+﻿En la demo SP1 vam replantejar l’estructura del nostre Super computting parking, presentant un esquema unificat amb tots el grups.
+
+
+També vam presentar quins seríen els estats del cotxe, fundamental per la creció de la base de dades i la continuació del procés de desenvolupament.
+
+
+Per última, vam mostrar una petita demostració del que sería el primer intent de connexió entre servidors i l’execució de l’script per obtenir informació del vehicle.
+
+
+
+
+Fent una petita reflixió, vam poder superar el problemes del sprint 0 i vam treballar bé en grup. El problema va ser les relacions amb altres grups, on les comunicacions no van ser les adequades i ens vam trobar incoherencies a les demos.
