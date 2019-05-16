@@ -22,8 +22,8 @@ matricula=$(cat /root/log/accLog.txt  | sed -n '3p')
     echo "Modo operación: $(lscpu | grep "operación" | cut -d: -f2)"
     echo "CPU(s): $(lscpu | grep -m1 "CPU(s):" | awk '{print $2}')"
     echo "Frecuencia: $(lscpu | grep "CPU MHz:" | awk '{print $3}')"
-#   echo "Frecuencia máxima: $(lscpu | grep "CPU max" | awk '{print $4}' | cut -d, -f1)MHz"
-#   echo "Frecuencia mínima: $(lscpu | grep "CPU min" | awk '{print $4}' | cut -d, -f1)MHz"
+    #echo "Frecuencia máxima: $(lscpu | grep "CPU max" | awk '{print $4}' | cut -d, -f1)MHz"
+    #echo "Frecuencia mínima: $(lscpu | grep "CPU min" | awk '{print $4}' | cut -d, -f1)MHz"
     echo "Load Average (1 min): $(uptime | awk '{print $9}' | cut -d, -f1,2)"
     echo "Load Average (5 min): $(uptime | awk '{print $10}' | cut -d, -f1,2)"
     echo "Load Average (15 min): $(uptime | awk '{print $11}' | cut -d, -f1,2)"
@@ -41,9 +41,9 @@ matricula=$(cat /root/log/accLog.txt  | sed -n '3p')
     while read -r line; do
     	if echo $line | awk '{print $1}' | grep -q "/dev"; then
     		echo "Dispositivo: $(echo $line | grep "/dev/" | awk '{print $1}')"
-    		echo "Espacio total: $(echo $line | grep "/dev/" | awk '{print $2}')"
-    		echo "Espacio usado: $(echo $line | grep "/dev/" | awk '{print $3}') ($(echo $line | grep "/dev/" | awk '{print $5}'))"
-    		echo -e "Espacio disponible: $(echo $line | grep "/dev/" | awk '{print $4}')\n"
+    		echo "Espacio total: $(echo $line | grep "/dev/" | awk '{print $2}' | cut -d 'G' -f1) GB"
+    		echo "Espacio usado: $(echo $line | grep "/dev/" | awk '{print $3}' | cut -d 'G' -f1) GB ($(echo $line | grep "/dev/" | awk '{print $5}'))"
+    		echo -e "Espacio disponible: $(echo $line | grep "/dev/" | awk '{print $4}' | cut -d 'G' -f1) GB\n"
     	fi
     done < <(df -H)
 
