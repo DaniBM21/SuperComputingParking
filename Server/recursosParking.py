@@ -21,7 +21,7 @@ def sumResources():
 						_ram += int(line.split()[1])
 
 					elif 'Espacio disponible:' in line:
-						_hddSpace += float(line.split[2])
+						_hddSpace += float((line.split[2]).replace(',','.'))
 
 
 		tableUpdate(_clockRate,_cpuCores,_ram, _hddSpace)
