@@ -1,5 +1,11 @@
 #!/usr/bin/python
-import time, os, subprocess, re, shutil
+import time, os, subprocess, re, shutil, requests, json
+
+body = {"username":"JesusPtin", "password":"prueba"}
+r = requests.get('http://craaxcloud.epsevg.upc.edu:19002/api/prueba', data = body)
+r.status_code
+get_json = r.json()
+print(get_json)
 
 def primeraIPDisponible():
 
@@ -19,7 +25,7 @@ def primeraIPDisponible():
 					# La consulta se haria con la matricula.
 					return IP
 
-	#Si el codigo llega aquí, significa que no ha encontrado ninguna IP con estado disponible. Tendriamos que devolver algo para que lo vuelva a intentar en x segundos.
+	#Si el codigo llega aqui, significa que no ha encontrado ninguna IP con estado disponible. Tendriamos que devolver algo para que lo vuelva a intentar en x segundos.
 	return "noIP"				
 
 # Ponemos while 1 pq se ejecuta todo el rato, pararemos cuando arranque el coche, ja que para toda la computacion
