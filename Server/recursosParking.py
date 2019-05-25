@@ -2,13 +2,13 @@ import os, time, requests, json
 
 ##Funcion que recorre todos los archivos en matriculasValidas y suma los parametros de interes.
 ##Seguidamente, hace un update en una tabla de la BD mediante la API.
-def sumResources():
+def sumResources(_parkingID):
 	_clockRate = 0
 	_cpuCores = 0
 	_ram = 0
 	_hddSpace = 0
-	for x in os.listdir('/root/matriculasValidas'):
-			file = '/root/matriculasValidas' + str(x)
+	for x in os.listdir('matriculasValidas'):
+			file = 'matriculasValidas/' + str(x)
 			with open(file) as current_file:
 				for line in current_file:
 					if 'CPU(s)' in line:
@@ -21,21 +21,22 @@ def sumResources():
 						_ram += int(line.split()[1])
 
 					elif 'Espacio disponible:' in line:
-						_hddSpace += float((line.split[2]).replace(',','.'))
+						_hddSpace += float((line.split()[2]).replace(',','.'))
 
 
-		tableUpdate(_clockRate,_cpuCores,_ram, _hddSpace)
-
+	print(_parkingID,_clockRate,_cpuCores,_ram, _hddSpace)
+	tableUpdate(_parkingID,_clockRate,_cpuCores,_ram, _hddSpace)
 
 ##Hace un update en una tabla con una llamada a la API.
-def tableUpdate(_clockRate,_cpuCores,_ram,_totalHDD_space):
-	body = {"clockRate":"_clockRate","cpuCores":"_cpuCores","ram":"_ram","hddSpace":"_hddSpace"}
-	request = requests.post('http://craaxcloud.epsevg.upc.edu:19002/api/llamadaApi',data=body)
+def tableUpdate(_parkingID,_clockRate,_cpuCores,_ram,_hddSpace):
+	body = {'parkingID':_parkingID,'clockRate':_clockRate,'cpuCores':_cpuCores,'ram':_ram,'hddSpace':_hddSpace}
+	request = requests.post('http://craaxcloud.epsevg.upc.edu:19002/api/actualitzar-recursos-parking',data = body)
+	print(request.status_code)
 
 def main():
 	while 1:
-		sumResources()
-		time.sleep(20)
+		sumResources(1)
+		time.sleep(10)
 
 
 main()
