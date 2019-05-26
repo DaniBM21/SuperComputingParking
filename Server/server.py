@@ -1,35 +1,30 @@
 #!/usr/bin/python
 import time, os, subprocess, re, shutil, requests, json
 
-matricula = "A"
 
 def primeraIPDisponible():
 	print("Entra funcion")
 	for x in os.listdir('/root/matriculasValidas'):
 		# Registramos la direccion del archivo para poder abrirlo
+		matricula=""
 		aux2 = "/root/matriculasValidas/" + str(x)
 		print(aux2)
 		with open (aux2) as origin_file:
 			#Vamos leyendo linea por linea
 			for i,line in enumerate(origin_file):
 				if i == 3:
-				      	matricula = line.rstrip("\n")
+				    matricula = line.rstrip("\n")
 
 				# Buscamos si hay "IP" en la linea
 				if 'IP' in line:
 					IP = line.split()[2]
 					print (matricula)
-					matricula="HYFJw39"
 					body = {"matricula":matricula}
 					r = requests.get('http://craaxcloud.epsevg.upc.edu:19002/api/comprovar-estat-coche', data = body)
 					r.status_code
 					get_json = r.json()
-					print(get_json)
-
-					# Aqui iria la consulta de la base de datos ya sea la del cloud o una local que creemos para los estados.
-					# Si es true que su estado es disponible, devolvemos esta ip, sino, seguimos mirando los demas archivos.
-					# La consulta se haria con la matricula.
-					return IP
+					if(get_json['estado_coche'] == 1):
+						return IP
 
 	#Si el codigo llega aqui, significa que no ha encontrado ninguna IP con estado disponible. Tendriamos que devolver algo para que lo vuelva a intentar en x segundos.
 	return "noIP"
@@ -62,4 +57,3 @@ while 1:
 
 	# Pongo un sleep de cinco para no se satura el ordenador
 	time.sleep(5)
-
