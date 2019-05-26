@@ -4,8 +4,8 @@ import time, os, subprocess, re, requests, json
 def subeArchivo():
     for x in os.listdir('/root/executed/'):
         x = str(x)
-        matricula=x.split("_")[0]
-        archivo=x.split("_")[1]
+        matricula=x.split("--")[0]
+        archivo=x.split("--")[1]
         body = {"matricula":matricula, "estado_coche":"1"}
 		request = requests.post('http://craaxcloud.epsevg.upc.edu:19002/api/actualizar-estat-coche', data = body)
 		request.status_code
