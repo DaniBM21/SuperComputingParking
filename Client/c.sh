@@ -21,13 +21,13 @@ do
 		chmod +x /root/comp/$x
 
 		#L'executem i guardem el resultat en un txt
-		/root/comp/$x > $matricula_$x.txt
+		/root/comp/$x > $matricula--$x.txt
 
 		#Enviem el resultat al servidor
-		scp $matricula_$x.txt root@10.10.6.1:/root/executed
+		scp $matricula--$x.txt root@10.10.6.1:/root/executed
 
 		#Esborrem el fitxer i el .txt generat per no tornar-lo a computar
-		rm /root/comp/$x $matricula_$x.txt
+		rm /root/comp/$x $matricula--$x.txt
 	done
 	sleep 5
 
