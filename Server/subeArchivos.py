@@ -11,7 +11,7 @@ def subeArchivo():
 		request.status_code
         os.rename('/root/executed/'+x,'/root/executed/'+archivo)
         archivo = '/root/executed/' + archivo
-        p = subprocess.Popen (["scp", "-i", "id_rsa","-p","19022", archivo, "ptin@10.100.0.1:/var/www/html/dashboard/uploads"])
+        p = subprocess.Popen (["scp", "-i", "id_rsa","-P","19022", archivo, "ptin@10.100.0.1:/var/www/html/dashboard/uploads"])
 		# Esperamos a que termine el envio.
 		sts = os.waitpid(p.pid, 0)
 
