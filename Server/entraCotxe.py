@@ -11,7 +11,7 @@ import shutil
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-server_address = ('192.168.43.67', 120)
+server_address = ('192.168.43.159', 120)
 sock.bind(server_address)
 
 while True:
@@ -20,24 +20,25 @@ while True:
 	mat = bytes(mat).decode("utf-8")
 	#Rebem la matricula
 	if mat:
-		body = {"matricula": mat, "parkingID": 1}
+		body = {"matricula": mat, "parkingID": "1"}
 		request = requests.get('http://craaxcloud.epsevg.upc.edu:19002/api/comprovar-reserva-coche', data= body)
 		reserva = request.json()
 		print(reserva['status'])
 		request2 =  requests.post('http://craaxcloud.epsevg.upc.edu:19002/api/introduir-coche-parking', data = body)
 		plaza = request2.json()
+		print(plaza)
 		print(plaza['plazaID'])
 
 		#Enviem OK a l'entrada del cotxe
-		res = reserva['status'] + "," + plaza['plazaID']
-		sent = sock.sendto(bytes(res, "utf-8"), ('192.168.43.63',120))
+		res = str(reserva['status']) + "," + str(plaza['plazaID'])
+		sent = sock.sendto(bytes(res.encode("utf-8")), ('192.168.43.76',120))
 
 		if(reserva['status'] == 0):
 			sPath = "/root/matriculasComprovar/"
 			dPath = "/root/matriculasValidas/"
 			end = ".txt"
-			sPath = sPath + mat + end
-			dPath = dPath + mat + end
+			sPath = sPath + str(mat) + end
+			dPath = dPath + str(mat) + end
 			os.rename(sPath, dPath)
 
 		else:
