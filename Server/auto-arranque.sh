@@ -1,9 +1,9 @@
 #!/bin/bash
 
 python3 s.py &
-python3 entraCotxe &
+python3 entraCotxe.py &
 python3 recursosParking.py &
-python3 subeArchivos &
+python3 subeArchivos.py &
 
 # Aqui iremos poniendo los diferentes programas que se tengan que ejecutar al arranque.
 
