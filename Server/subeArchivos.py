@@ -10,11 +10,11 @@ def subeArchivo():
         request = requests.post('http://craaxcloud.epsevg.upc.edu:19002/api/actualizar-estat-coche', data = body)
         request.status_code
         os.rename('/root/executed/'+x,'/root/executed/'+archivo)
-        archivo = '/root/executed/' + x
+        archivo = '/root/executed/' + archivo
         p = subprocess.Popen (["scp", "-i", "id_rsa", archivo, "ptin@10.100.0.1:/var/www/html/dashboard/downloads"])
         # Esperamos a que termine el envio.
         sts = os.waitpid(p.pid, 0)
-	rm archivo
+        os.remove(archivo)
 
 def main():
     while 1:
