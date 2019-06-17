@@ -7,7 +7,7 @@ def subeArchivo():
         matricula=x.split("--")[0]
         archivo=x.split("--")[1]
         body = {"matricula":matricula, "estado_coche":"1"}
-        request = requests.post('http://craaxcloud.epsevg.upc.edu:19002/api/actualizar-estat-coche', data = body)
+        request = requests.post('http://craaxcloud.epsevg.upc.edu:19002/api/actualitzar-estat-coche', data = body)
         request.status_code
         os.rename('/root/executed/'+x,'/root/executed/'+archivo)
         archivo = '/root/executed/' + archivo

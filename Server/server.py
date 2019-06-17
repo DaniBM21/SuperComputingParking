@@ -22,10 +22,11 @@ def primeraIPDisponible():
 					print(get_json.get('estat_coche'))
 					if(get_json.get('estat_coche') == 1):
 						return IP, matricula
+					else: break
 
 	#Si el codigo llega aqui, significa que no ha encontrado ninguna IP con estado disponible. Tendriamos que devolver algo para que lo vuelva a intentar en x segundos.
 	print("No entra")
-	return "noIP"
+	return "noIP","NONE"
 
 # Ponemos while 1 pq se ejecuta todo el rato, pararemos cuando arranque el coche, ja que para toda la computacion
 while 1:
@@ -45,9 +46,11 @@ while 1:
 		sts = os.waitpid(p.pid, 0)
 
 		# Actualización del estado del coche en la API
-		body = {"matricula":matricula, "estat_coche":"2"}
-		request = requests.post('http://craaxcloud.epsevg.upc.edu:19002/api/actualizar-estat-coche', data = body)
-		request.status_code
+		body = {"matricula":matricula, "estado_coche":2}
+		req = requests.post('http://craaxcloud.epsevg.upc.edu:19002/api/actualitzar-estat-coche', data = body)
+		print(req.status_code)
+		getjson = req.json()
+		print(getjson)
 
 		#Ahora que el programa ya se ha mandado al agente en cuestion, lo eliminamos del server.
 		#os.remove(dir_programa)
