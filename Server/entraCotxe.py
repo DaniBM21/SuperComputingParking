@@ -17,7 +17,9 @@ try:
 	server_address = ('0.0.0.0', 120)
 	sock.bind(server_address)
 except Exception as e:
-	sys.exit("No s'ha pogut establir la conexió amb la barrera: " + str(e))
+	print ("No s'ha pogut establir la conexió amb la barrera")
+	res = "1,9"
+	sent = sock.sendto(bytes(res.encode("utf-8")), ('10.90.0.18',120))
 
 while True:
 	print ('\nwaiting to receive message')
@@ -26,7 +28,10 @@ while True:
 		mat, address = sock.recvfrom(100)
 		mat = bytes(mat).decode("utf-8")
 	except Exception as e:
-		sys.exit("No s'ha pogut llegir la matrícula: " + str(e))
+		print ("No s'ha pogut llegir la matrícula")
+		res = "1,9"
+		sent = sock.sendto(bytes(res.encode("utf-8")), ('10.90.0.18',120))
+
 
 	#Rebem la matricula
 	if mat:
@@ -37,7 +42,10 @@ while True:
 			reserva = request.json()
 			print(reserva['status'])
 		except Exception as e:
-			sys.exit("No s'ha pogut comrpovar la reserva de la matrícula: " + str(e))
+			print ("No s'ha pogut comrpovar la reserva de la matrícula")
+			res = "1,9"
+			sent = sock.sendto(bytes(res.encode("utf-8")), ('10.90.0.18',120))
+
 
 		#Comprovem status de la reserva
 		if(reserva['status'] == 0):
@@ -59,14 +67,20 @@ while True:
 				print(plaza)
 				print(plaza['plazaID'])
 			except Exception as e:
-				sys.exit("ID de la plaça no disponible: " + str(e))
+				print ("ID de la plaça no disponible")
+				res = "1,9"
+				sent = sock.sendto(bytes(res.encode("utf-8")), ('10.90.0.18',120))
+
 
 			#Enviem OK a l'entrada del cotxe amb la plaça
 			try:
 				res = "0,"+str(plaza['plazaID'])
 				sent = sock.sendto(bytes(res.encode("utf-8")), ('10.90.0.18',120))
 			except Exception as e:
-				sys.exit("Error al enviar OK a la barrera: " + str(e))
+				print ("Error al enviar OK a la barrera")
+				res = "1,9"
+				sent = sock.sendto(bytes(res.encode("utf-8")), ('10.90.0.18',120))
+
 
 		else:
 			#Informem que no pot passar a la barrera
