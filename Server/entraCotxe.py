@@ -9,6 +9,9 @@ import json
 import os
 import shutil
 
+hostname = socket.gethostname()
+hostname = hostname.strip()
+
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 server_address = ('192.168.43.159', 120)
@@ -20,7 +23,8 @@ while True:
 	mat = bytes(mat).decode("utf-8")
 	#Rebem la matricula
 	if mat:
-		body = {"matricula": mat, "parkingID": "1"}
+
+		body = {"matricula": mat, "parkingID": hostname[-1]}
 		request = requests.get('http://craaxcloud.epsevg.upc.edu:19002/api/comprovar-reserva-coche', data= body)
 		reserva = request.json()
 		print(reserva['status'])
