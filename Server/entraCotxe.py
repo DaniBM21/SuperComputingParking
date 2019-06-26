@@ -14,7 +14,7 @@ hostname = hostname.strip()
 
 try:
 	sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	server_address = ('0.0.0.0', 120)
+	server_address = ('0.0.0.0', 140)
 	sock.bind(server_address)
 except Exception as e:
 	print ("No s'ha pogut establir la conexió amb la barrera")
@@ -62,7 +62,7 @@ while True:
 			try:
 				request2 =  requests.post('http://10.100.0.1:3002/api/introduir-cotxe-parking', data = body)
 				plaza = request2.json()
-
+				print(plaza)
 			#Enviem OK a l'entrada del cotxe amb la plaça
 
 				res = "0,"+str(plaza['plazaID'])
