@@ -14,7 +14,6 @@ def primeraIPDisponible():
 				   # Buscamos si hay "IP" en la linea
 				if 'IP' in line:
 					IP = line.split()[2]
-					print(IP)
 					body = {"matricula":matricula}
 					r = requests.get('http://10.100.0.1:3002/api/comprovar-estat-cotxe', data = body)
 					print(r.status_code)
@@ -23,8 +22,6 @@ def primeraIPDisponible():
 					print(get_json.get('estat_coche'))
 					if(get_json.get('estat_coche') == 1):
 						return IP, matricula
-					elif(get_json.get('estat_coche') == 2):
-						print("El coche esta computant")
 					else: break
 
 	#Si el codigo llega aqui, significa que no ha encontrado ninguna IP con estado disponible. Tendriamos que devolver algo para que lo vuelva a intentar en x segundos.
@@ -35,28 +32,35 @@ def primeraIPDisponible():
 while 1:
 	# Si hay algun archivo
 	for x in os.listdir('/root/toExecute'):
-		IP, matricula = primeraIPDisponible()
-		while IP == "noIP":
-			time.sleep(5)
+		#Mira si es PP
+		if 'import pp' in open('/root/toExecute/'+x).read():
+			print("Ejecutando "+x+" en paralelo")
+			os.system('python /root/toExecute/'+x+' > /root/executed/'+x+'.txt')
+			os.system('rm /root/toExecute/'+x)
+			print("Ejecutado "+x)
+		else:
 			IP, matricula = primeraIPDisponible()
-		print("IP:")
-		print(IP)
-		print(matricula)
-		dir_programa = "/root/toExecute/" + str(x)
-		#Hacemos el SCP
-		p = subprocess.Popen (["scp", dir_programa, "root@"+IP+":/root/comp"])
-		# Esperamos a que termine el envio.
-		sts = os.waitpid(p.pid, 0)
+			while IP == "noIP":
+				time.sleep(5)
+				IP, matricula = primeraIPDisponible()
 
-		# Actualización del estado del coche en la API
-		body = {"matricula":matricula, "estado_coche":2}
-		req = requests.post('http://10.100.0.1:3002/api/actualitzar-estat-cotxe', data = body)
-		print(req.status_code)
-		getjson = req.json()
-		print(getjson)
+			print(IP)
+			print(matricula)
+			dir_programa = "/root/toExecute/" + str(x)
+			#Hacemos el SCP
+			p = subprocess.Popen (["scp", dir_programa, "root@"+IP+":/root/comp"])
+			# Esperamos a que termine el envio.
+			sts = os.waitpid(p.pid, 0)
 
-		#Ahora que el programa ya se ha mandado al agente en cuestion, lo eliminamos del server.
-		#os.remove(dir_programa)
+			# Actualización del estado del coche en la API
+			body = {"matricula":matricula, "estado_coche":2}
+			req = requests.post('http://10.100.0.1:3002/api/actualitzar-estat-cotxe', data = body)
+			print(req.status_code)
+			getjson = req.json()
+			print(getjson)
+
+			#Ahora que el programa ya se ha mandado al agente en cuestion, lo eliminamos del server.
+			#os.remove(dir_programa)
 
 	# Pongo un sleep de cinco para no se satura el ordenador
 	time.sleep(5)
