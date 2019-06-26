@@ -38,7 +38,7 @@ while True:
 
 		try:
 			body = {"matricula": mat, "parkingID": hostname[-1]}
-			request = requests.get('http://10.100.0.1:3002/api/comprovar-reserva-cotxe', data= body)
+			request = requests.get('https://10.100.0.1:3002/api/comprovar-reserva-cotxe', data= body, verify= False)
 			reserva = request.json()
 			print(reserva['status'])
 		except Exception as e:
@@ -60,7 +60,7 @@ while True:
 
 			# Preguntem la plaça disponible
 			try:
-				request2 =  requests.post('http://10.100.0.1:3002/api/introduir-cotxe-parking', data = body)
+				request2 =  requests.post('https://10.100.0.1:3002/api/introduir-cotxe-parking', data = body, verify=False)
 				plaza = request2.json()
 				print(plaza)
 			#Enviem OK a l'entrada del cotxe amb la plaça

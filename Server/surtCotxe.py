@@ -35,7 +35,7 @@ while 1:
 			while i < 3:
 				body = {"matricula": mat, "qr": qr}
 				#request = requests.post('http://craaxcloud.epsevg.upc.edu:19022/api/sortida-cotxe-parking', data = body)
-				request = requests.post('http://10.100.0.1:3002/api/sortida-cotxe-parking', data= body)
+				request = requests.post('https://10.100.0.1:3002/api/sortida-cotxe-parking', data= body, verify=False)
 				sortir = request.json()
 				print("Status_code")
 				print(request.status_code)
@@ -65,7 +65,7 @@ while 1:
 						j = 0
 						while j < 3:
 							body = {"matricula":mat}
-							request = requests.get('http://10.100.0.1:3002/api/comprovar-estat-cotxe', data = body)
+							request = requests.get('https://10.100.0.1:3002/api/comprovar-estat-cotxe', data = body,verify=False)
 							print("Comprovar estat cotxe")
 							estat = request.json()
 							if request.status_code == "200" and str(estat['status']) == "0":

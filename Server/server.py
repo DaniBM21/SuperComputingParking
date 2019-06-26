@@ -15,7 +15,7 @@ def primeraIPDisponible():
 				if 'IP' in line:
 					IP = line.split()[2]
 					body = {"matricula":matricula}
-					r = requests.get('http://10.100.0.1:3002/api/comprovar-estat-cotxe', data = body)
+					r = requests.get('https://10.100.0.1:3002/api/comprovar-estat-cotxe', data = body, verify=False)
 					print(r.status_code)
 					get_json = r.json()
 					print(get_json)
@@ -54,7 +54,7 @@ while 1:
 
 			# Actualización del estado del coche en la API
 			body = {"matricula":matricula, "estado_coche":2}
-			req = requests.post('http://10.100.0.1:3002/api/actualitzar-estat-cotxe', data = body)
+			req = requests.post('https://10.100.0.1:3002/api/actualitzar-estat-cotxe', data = body, verify=False)
 			print(req.status_code)
 			getjson = req.json()
 			print(getjson)
