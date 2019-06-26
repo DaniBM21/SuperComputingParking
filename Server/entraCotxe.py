@@ -42,8 +42,8 @@ while True:
 			reserva = request.json()
 			print(reserva['status'])
 		except Exception as e:
-			print ("No s'ha pogut comrpovar la reserva de la matrícula")
-			res = "1,9"
+			print ("No s'ha pogut comprovar la reserva de la matrícula")
+			res = "1,No s'ha pogut comprovar la reserva de la matrícula"
 			sent = sock.sendto(bytes(res.encode("utf-8")), ('10.90.0.18',120))
 
 
@@ -63,29 +63,20 @@ while True:
 				request2 =  requests.post('http://10.100.0.1:3002/api/introduir-cotxe-parking', data = body)
 				plaza = request2.json()
 
-				print (body)
-				print(plaza)
-				print(plaza['plazaID'])
-			except Exception as e:
-				print ("ID de la plaça no disponible")
-				res = "1,9"
-				sent = sock.sendto(bytes(res.encode("utf-8")), ('10.90.0.18',120))
-
-
 			#Enviem OK a l'entrada del cotxe amb la plaça
-			try:
+
 				res = "0,"+str(plaza['plazaID'])
 				sent = sock.sendto(bytes(res.encode("utf-8")), ('10.90.0.18',120))
 			except Exception as e:
 				print ("Error al enviar OK a la barrera")
-				res = "1,9"
+				res = "1,PlazaID no disponible"
 				sent = sock.sendto(bytes(res.encode("utf-8")), ('10.90.0.18',120))
 
 
 		else:
 			#Informem que no pot passar a la barrera
 			try:
-				res = "1,9"
+				res = "1,El cotxe no té reserva. No pot entrar"
 				sent = sock.sendto(bytes(res.encode("utf-8")), ('10.90.0.18',120))
 				print("El cotxe no té reserva. No pot entrar")
 			except Exception as e:
