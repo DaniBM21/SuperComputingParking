@@ -4,7 +4,7 @@ python3 server.py &
 python3 entraCotxe.py &
 python3 recursosParking.py &
 python3 subeArchivos.py &
-python3 surtCotxe.py
+python3 surtCotxe.py &
 # Aqui iremos poniendo los diferentes programas que se tengan que ejecutar al arranque.
 
 
