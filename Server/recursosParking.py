@@ -1,7 +1,6 @@
 import os, time, requests, json
 #_ip='http://craaxcloud.epsevg.upc.edu:19002/api/actualitzar-recursos-parking'
-_ip='https://10.100.0.1:3002/api/actualitzar-recursos-parking, '
-
+_ip='https://10.100.0.1:3002/api/actualitzar-recursos-parking'
 
 ##Funcion que recorre todos los archivos en matriculasValidas y suma los parametros de interes.
 ##Seguidamente, hace un update en una tabla de la BD mediante la API.
@@ -44,6 +43,7 @@ def tableUpdate(_parkingID,_clockRate,_cpuCores,_ram,_ram_used,_hddSpace,_hddSpa
 	body = {'parkingID':_parkingID,'clockRate':_clockRate,'cpuCores':_cpuCores,'ramAvailable':_ram,'ramUsed':_ram_used,'hddSpaceAvailable':_hddSpace,'hddSpaceUsed':_hddSpace_used}
 	request = requests.post(_ip,data = body, verify=False)
 	print(request.status_code)
+
 
 def main():
 	while 1:

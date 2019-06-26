@@ -20,14 +20,15 @@ do
 		#Li donem permissos d'execució al fitxer
 		chmod +x /root/comp/$x
 
+		arxiuResultant="${x::-3}"
 		#L'executem i guardem el resultat en un txt
-		/root/comp/$x > $matricula--$x.txt
+		python3 /root/comp/$x > $matricula--$arxiuResultant.txt
 
 		#Enviem el resultat al servidor
-		scp $matricula--$x.txt root@10.10.6.1:/root/executed
+		scp $matricula--$arxiuResultant.txt root@10.10.6.1:/root/executed
 
 		#Esborrem el fitxer i el .txt generat per no tornar-lo a computar
-		rm /root/comp/$x $matricula--$x.txt
+		rm /root/comp/$x $matricula--$arxiuResultant.txt
 	done
 	sleep 5
 
