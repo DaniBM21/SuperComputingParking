@@ -10,22 +10,20 @@ import os
 import shutil
 
 
-#sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-#server_address = ('192.168.43.159', 120)
-#sock.bind(server_address)
+server_address = ('0.0.0.0', 120)
+sock.bind(server_address)
 while 1:
-	k = k+1
 	try:
 		print ('\nwaiting to receive message')
-		#data, address = sock.recvfrom(100)
-		#data = bytes(data).decode("utf-8")
-		data = "1"
+		data, address = sock.recvfrom(500)
+		data = bytes(data).decode("utf-8")
+		print (data)
 		if data:
-			#mat = data.split(",")[1]
-			#qr = data.split(",")[0]
-			mat = "ABC13"
-			qr = "asdfgh123"
+			mat = data.split(",")[1]
+			qr = data.split(",")[0]
+
 			print(qr)
 			print(mat)
 	except:
@@ -43,23 +41,24 @@ while 1:
 				print(request.status_code)
 				print("Status")
 				print(sortir['status'])
-				if request.status_code == "200" and str(sortir['status']) == "1":
+
+				if str(request.status_code) == "200" and str(sortir['status']) == "1":
 					n = sortir['status']
 					m = sortir['message']
 					print("Ha entrat on toca")
 					print(n)
 					print(m)
-					res = str(n) + "," + str(m)
+					res =  str(n) + "," +  str(m)
 					print(res)
-					sent = sock.sendto(bytes(res.encode("utf-8")), ('192.168.43.76',120))
+					sent = sock.sendto(bytes(res.encode("utf-8")), ('10.90.0.18',120))
 					i = 3
-				elif request.status_code == "200":
+				elif str(request.status_code) == "200":
 					print("elif")
 					n = sortir['status']
-					m = "El cotxe pot sortir"
-					res = str(n) + "," + str(m)
+					m = sortir['import']
+					res = str(n) + "," + "Has pagat: " + str(m)
 					print(res)
-					sent = sock.sendto(bytes(res.encode("utf-8")), ('192.168.43.76',120))
+					sent = sock.sendto(bytes(res.encode("utf-8")), ('10.90.0.18',120))
 					i = 3
 
 					try:
