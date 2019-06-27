@@ -35,9 +35,11 @@ while 1:
 		#Mira si es PP
 		if 'import pp' in open('/root/toExecute/'+x).read():
 			print("Ejecutando "+x+" en paralelo")
-			os.system('python /root/toExecute/'+x+' > /root/executed/'+x+'.txt')
-			os.system('rm /root/toExecute/'+x)
+			nomArchiuNou =  x[:-3]
+			os.system('python /root/toExecute/'+x+' > /root/executed/NULL--'+nomArchiuNou+'.txt')
+			#os.system('rm /root/toExecute/'+x)
 			print("Ejecutado "+x)
+			time.sleep(3)
 		else:
 			IP, matricula = primeraIPDisponible()
 			while IP == "noIP":

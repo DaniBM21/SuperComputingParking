@@ -6,9 +6,10 @@ def subeArchivo():
         x = str(x)
         matricula=x.split("--")[0]
         archivo=x.split("--")[1]
-        body = {"matricula":matricula, "estado_coche":"1"}
-        request = requests.post('https://10.100.0.1:3002/api/actualitzar-estat-cotxe', data = body, verify=False)
-        request.status_code
+	if(matricula != "NULL"):
+        	body = {"matricula":matricula, "estado_coche":"1"}
+       		request = requests.post('https://10.100.0.1:3002/api/actualitzar-estat-cotxe', data = body, verify=False)
+        	request.status_code
         os.rename('/root/executed/'+x,'/root/executed/'+archivo)
         archivo = '/root/executed/' + archivo
         p = subprocess.Popen (["scp", "-i", "id_rsa", archivo, "ptin@10.100.0.1:/var/www/html/dashboard/downloads"])
