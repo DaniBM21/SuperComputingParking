@@ -1,2 +1,5 @@
-# ptintoreria
-En este repositorio guardaremos los archivos que necesitemos para el proyecto.
+# Supercomputing Parking
+UPC university project.
+In this repository are the files of the infrastructure part of the project.
+
+
